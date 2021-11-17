@@ -1,0 +1,34 @@
+# 10 Notizen über Scrum
+- Das Projekt wird in viele kleine Tasks aufgebrochen
+- Planen (soweit das man starten kann) - Bauen - Testen - Ausliefern - Review
+- Prozess wird mehrmals wiederholt, sodass immer weniger Zeit zwischen Planen und Bauen entsteht
+- Nach jedem Durchgang entsteht ein potentiell auslieferbares Produkt
+- Am Ende hat man mehrere hergestellte Produkte, der einzelen Durchgänge
+- Diese Durchgänge heioßen Sprints
+- Ein Sprint dauert 1-3 Wochen
+- Sprints werden solange wiederholt bis das Produkt fertig ist
+- 3 wichtige Rollen: 
+  -  Product Owner (Ideengeber)
+  -  ScrumMaster (Teamleiter. Überwacher des Prozesses)
+  -  Team (verantwortlich das Produkt voranzutreiben)
+- 3 (4) wichtige Arbeitsmittel:  
+  - ProductBacklog (Product Owner macht Liste an Dingen die das Produkt können soll: "User Stories", die Priorität der Dinge kann sich von Sprint zu Sprint ändern)
+  - UserStories: Feature das das Programm haben bzw. können soll (helfen dem Product Owner die größe der Task einzuschätzen)
+  - SprintBacklog: UserStories mit höchster Priorität, welche dann im nächsten Sprint landen
+  - BurndownChart: Diagramm zeigt den Fortschritt eines Sprints, bei 0 sind alle Task erledigt
+- 3 Arten von Meetings: 
+  - Sprint Planning: Product Owner, ScrumMaster und Team besprechen UserStories und schätzen ihren Aufwand ein
+  - Daily Scrum: Tägliches Meeting wo Fortschritte und Probleme besprochen werden
+  - Sprint Review: Am Ende jedes Sprints, Team stellt die Arbeits dem Product Owner vor
+# Which complications of can you see?
+- Der Scrum Master muss immer den Überblick behalten und den Gesamtfortschritt im Auge behalten. 
+- Hoher Kommunikations- und Abstimmungsaufwand
+- Zeitverlust wenn man die Sprints zudefensiv plant
+- Team hat keinen Einblick auf andere Tasks und ist im eigenen "Tunnel"
+# Which advantages of scrum can you see?
+- Hohe Flexibilität
+- Kontinuierlicher Verbesserungsprozess
+- Das Team kann sich selsbt organisieren
+- permanenter Austausch durch tägliche Meetings
+- Probleme und stockende Tasks werden schnell erkannt und es kann geholfen werden
+- Immer wieder neue verbesserte Podukte 
