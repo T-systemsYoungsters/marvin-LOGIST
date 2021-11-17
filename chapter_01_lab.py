@@ -15,8 +15,8 @@ print("Der Flächeninhalt beträgt: ", A)
 #1.3
 import math
 print("Dieses Programm erechnet den Flächeninhalt eines Kreises mit Hilfe des Durchmessers")
-pi = math.pi
+PI = math.pi
 d = float(input("Durchmesser eingeben: "))
 r = d / 2
-A = pi * r**2
+A = PI * r**2
 print("Der Flächeninhalt beträgt: ", A)
