@@ -50,7 +50,22 @@ input und float sind vertauscht. Erst kommt der Datentyp, dann der Input
 Ja alle bedeuten das gleiche, aber die 2. Varainte ist am besten. Sie ist am übersichtlichsten und man sollte nach und vor jedem Operator ein Leerzeichen machen
 
 # 15. What is a constant?
-Eine Variable deren Dekleration im Nachhinein nicht mehr verändert werdeb 
+Eine Variable deren Dekleration im Nachhinein nicht mehr verändert werden
+
+# 16. How are variable names for constants different than other variable names?
+Konstanten werden immer Uppercase deklariert und Varibalen im Lowercase
+
+# 17. What is a single quote and what is a double quote? Give and label an example of both.
+- single qoute: '
+  - 'Die Märchen der Gebrüder Grimm'
+- double qoute: "
+  - "Die Grimm'schen Märchen"
+ 
+# 18. Write a Python program that will use escape codes to print a double-quote and a new line using the Window's standard.
+print(" "\n")
+
+# 19. Can a Python program print text to the screen using single quotes instead of double quotes?
+Ja
 
 # 20. Why does this code not calculate the average?
 Weil Punkt vor Strichrechnung. Das Programm muss erst die Summer errechnen und dann dividieren. Man muss also eine Klammer um die Addition setzen
