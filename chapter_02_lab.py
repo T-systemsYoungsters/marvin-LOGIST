@@ -1,4 +1,5 @@
 print("QUIZ TIME!")
+
 true = ("\033[32m" + "Deine Antwort ist richtig!")
 false = ("\033[31m" + "Deine Antwort ist leider falsch.")
 a = 0
@@ -67,5 +68,9 @@ print("\033[0m")
 
 count_percent = (count / 5) * 100 
 
-print("Herzlichen Glückwunsch, du hast", count,"Fragen richtig beantwortet!")
-print("Das entspricht", count_percent,"Prozent")
+if count == 1:
+    print("Herzlichen Glückwunsch, du hast", count,"Frage richtig beantwortet!")
+    print("Das entspricht", count_percent,"Prozent")
+else:
+    print("Herzlichen Glückwunsch, du hast", count,"Fragen richtig beantwortet!")
+    print("Das entspricht", count_percent,"Prozent")
