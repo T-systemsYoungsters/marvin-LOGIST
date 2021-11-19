@@ -46,8 +46,23 @@ PHP\
 R
 
 # 13. Look at the job boards and see what languages people are looking for. List the languages and the job board you looked at.
-
+(stepstone.de) \
+DELPHI\
+C#\
+VBS (Visual Basic Script)\
+SCL (Structured Control Language)\
+Java
 
 # 14. What is the difference between the ``syntax'' and ``semantics'' of a language?
+- Die Syntax beschreibt die Regeln einer Programmiersprache, also wie man darin schreibt. Sozusagen die Grammatik
+- Die Semantik beschreibt die Zuordnung von Bedeutung zu Texten
 
 # 15. Pick a piece of technology, other than a computer you use regularly. Briefly describe the hardware and software that run on it.
+Fernseher 
+- Hardware
+  - Display
+  - Platine/Mainboard
+  - Infrarotsensor
+  - WlAN Modul
+- Software
+  - Betriebssystem
