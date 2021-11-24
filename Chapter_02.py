@@ -8,7 +8,7 @@ if a == 1:
 else:
     print("Antwort ist falsch")
 
-print("Wieviele Punkte hat das Telekom Logo")
+print("Wieviele Punkte hat das Telekom Logo?")
 print("1. 1\n2. 2\n3. 3\n4. 4")
 b = int(input("Bitte Antwort eingeben: "))
 if b == 4:
