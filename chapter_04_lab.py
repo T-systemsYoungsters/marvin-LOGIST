@@ -61,7 +61,7 @@ while not done:
         thirst += 1
         camel_tiredness += random.randrange(1,3)
         natives_distance += random.randrange(7,15)
-        print(f"You traveled {miles_traveled} so far")
+        print(f"You traveled {miles_traveled} miles so far")
         print(x)
 
     #14.
