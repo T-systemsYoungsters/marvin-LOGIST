@@ -84,7 +84,7 @@ while not done:
         print(x)
 
     #16.
-    if thirst in range(5,6):
+    if thirst in range(5,7):
         print("You are thirsty.")
         print(x)
 
@@ -95,7 +95,7 @@ while not done:
         done = True
     
     #18.
-    if camel_tiredness in range(6,8):
+    if camel_tiredness in range(6,9):
         print("Your camel is getting tired.")
         print(x)
     
@@ -123,8 +123,8 @@ while not done:
     #23.
     oasis_chance = random.randrange(1,20)
     if oasis_chance == 7 and done == False :
-        canteen = 7
+        drinks_canteen = 7
         thirst = 0
-        tiredness = 0
+        camel_tiredness = 0
         print("You have found an oasis! You are reseting")
         print(x)
