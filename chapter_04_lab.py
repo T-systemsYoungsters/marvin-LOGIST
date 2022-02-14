@@ -67,7 +67,7 @@ while not done:
     #14.
     elif user_choice.upper() == 'B':
         miles_traveled += random.randrange(5,13)
-        print(f"You traveled {miles_traveled} so far")
+        print(f"You traveled {miles_traveled} miles so far")
         print(x)
         thirst += 1
         camel_tiredness += 1
