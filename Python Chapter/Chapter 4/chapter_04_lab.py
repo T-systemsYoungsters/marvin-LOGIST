@@ -113,7 +113,7 @@ while not done:
         print()
     
     #22.
-    if miles_traveled >= 200 and natives_distance >= 0 and thirst <= 6 and camel_tiredness <= 8 :
+    if miles_traveled >= 200 and natives_distance > 0 and thirst <= 6 and camel_tiredness <= 8 :
         print("You won!")
         done = True
     
