@@ -46,7 +46,7 @@ while not done:
         # Wheels
         pygame.draw.circle(screen, BLACK, (x_wheels_origin, y_wheels_origin), wheels_rad)
 
-        x_wheels_origin = x_wheels_origin + (i + 45)
+        x_wheels_origin = x_wheels_origin + 45
 
     pygame.display.flip()
     clock.tick(60)

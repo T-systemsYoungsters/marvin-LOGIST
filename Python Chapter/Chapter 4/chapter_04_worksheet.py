@@ -26,7 +26,7 @@ print("This program takes three numbers and returns the sum.")
 total = 0
  
 for i in range(3):
-    x = input("Enter a number: ") #Der Input hat keinen Datentyp
+    x = input("Enter a number: ") #Der Input hat einen string als Datentyp, es muss ein int sein
     total = total + i #falsche Variable, dort muss das x stehen
 print("The total is:", x) #x ist unser input, dort muss "total" stehen
 
