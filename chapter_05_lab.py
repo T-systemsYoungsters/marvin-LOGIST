@@ -33,7 +33,6 @@ while not done:
 
     # Cabin
     pygame.draw.rect(screen, RED, pygame.Rect(300, 200, 50, 80))
-    #pygame.draw.polygon(screen, RED, [[60, 0], [25, 30], [95, 30]])
 
     # Window
     pygame.draw.rect(screen, BLUE, pygame.Rect(310, 210, 30, 30))
