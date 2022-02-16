@@ -29,13 +29,13 @@ while not done:
 
     # DRAWING
     # Chassi
-    pygame.draw.rect(screen, RED, pygame.Rect(190, 250, 125, 30))
+    pygame.draw.rect(screen, RED, [190, 250, 125, 30])
 
     # Cabin
-    pygame.draw.rect(screen, RED, pygame.Rect(300, 200, 50, 80))
+    pygame.draw.rect(screen, RED, [300, 200, 50, 80])
 
     # Window
-    pygame.draw.rect(screen, BLUE, pygame.Rect(310, 210, 30, 30))
+    pygame.draw.rect(screen, BLUE, [310, 210, 30, 30])
 
     # Wheels
     wheels_rad = 20
