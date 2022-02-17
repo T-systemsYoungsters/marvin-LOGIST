@@ -1,4 +1,3 @@
-'''
 #1
 x = 9
 for i in range(9):
@@ -22,7 +21,7 @@ for x in range(user_input-2):
     print()
 for x in range(user_input*2):
     print("°",end="")
-    '''
+
 #4.
 import pygame
  
@@ -38,7 +37,7 @@ pygame.init()
 size = (700, 500)
 screen = pygame.display.set_mode(size)
  
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("6.4 Part 4")
  
 # Loop until the user clicks the close button.
 done = False
@@ -65,12 +64,17 @@ while not done:
     screen.fill(BLACK)
  
     # --- Drawing code should go here
+    #Anfangskoordinaten
     x_rect_origin = 10
     y_rect_origin = 10
-    for i in range(10):
-        for j in range(10):
-            pygame.draw.rect(screen, GREEN, pygame.Rect(x_rect_origin, y_rect_origin, 20, 20))
-            x_rect_origin = x_rect_origin + (j + 30)
+    
+    for i in range(33): #Zeilen
+        for j in range(46): #Spalten
+            pygame.draw.rect(screen, GREEN, pygame.Rect(x_rect_origin, y_rect_origin, 10, 10)) #zeichnen des Rechtecks
+            x_rect_origin = x_rect_origin + 15 #erhöhen der x Koordinate um 15 nach jedem Rechteck
+        x_rect_origin = 10 #zurücksetzen der X Koordinate um die nächste Zeile wieder bei x=10 zu starten
+        y_rect_origin = y_rect_origin + 15 ##erhöhen der y Koordinate/Zeilenabstand um 15 nach jeder Zeile
+        
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
  
