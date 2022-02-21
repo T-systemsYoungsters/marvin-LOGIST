@@ -78,7 +78,7 @@ while x >= 0:
 print("Blast-off")
 ```
 
-# 7. 
+# 7. What is wrong with this code? It runs but it has unnecessary code. Find all the unneeded code. Also, answer why it is not needed.
 ```
 i = 0
 for i in range(10):
