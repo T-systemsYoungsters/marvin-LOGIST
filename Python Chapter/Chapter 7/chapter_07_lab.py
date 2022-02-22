@@ -56,7 +56,8 @@ while not done:
     # 15.
         if next_room == None:
             print()
-            print("You can't go that way")
+            print("\033[31m" + "You can't go that way")
+            print("\033[0m")
         else:
             current_room = next_room
 
@@ -67,7 +68,8 @@ while not done:
 
         if next_room == None:
             print()
-            print("You can't go that way")
+            print("\033[31m" + "You can't go that way")
+            print("\033[0m")
         else:
             current_room = next_room
     
@@ -77,7 +79,8 @@ while not done:
 
         if next_room == None:
             print()
-            print("You can't go that way")
+            print("\033[31m" + "You can't go that way")
+            print("\033[0m")
         else:
             current_room = next_room
 
@@ -87,7 +90,8 @@ while not done:
 
         if next_room == None:
             print()
-            print("You can't go that way")
+            print("\033[31m" + "You can't go that way")
+            print("\033[0m")
         else:
             current_room = next_room
     
