@@ -4,6 +4,7 @@ rect_x = 50
 pygame.draw.rect(screen, WHITE, [rect_x, 50, 50, 50])
 rect_x += 1
 ```
+- The problem with the above code is that rect_x is reset back to 50 each time through the loop.
 
 # 2. The example code to bounce a rectangle used a total of four variables. What did each variable represent?
 
