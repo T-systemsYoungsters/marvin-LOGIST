@@ -14,6 +14,8 @@ YELLOW = (255, 255, 0)
 
 PI = 3.141592653
 
+smoke_list = []
+
 screen_size = (700, 500)
 screen = pygame.display.set_mode(screen_size)
 
@@ -46,6 +48,8 @@ smoke4_y = 270
 
 
 change_x = 1
+
+counter = 0
 
 while not done:
  
@@ -82,10 +86,16 @@ while not done:
         rail_parts_x = rail_parts_x + 30
 
     # Smoke
-    pygame.draw.circle(screen,GREY, (smoke1_x, smoke1_y), 30)
-    pygame.draw.circle(screen,GREY, (smoke2_x, smoke2_y), 30)
-    pygame.draw.circle(screen,GREY, (smoke3_x, smoke3_y), 30)
-    pygame.draw.circle(screen,GREY, (smoke4_x, smoke4_y), 30)
+    for i in smoke_list: 
+        pygame.draw.circle(screen,GREY, (i[0], smoke1_y), 30)
+        pygame.draw.circle(screen,GREY, (i[1], smoke2_y), 30)
+        pygame.draw.circle(screen,GREY, (i[2], smoke3_y), 30)
+        pygame.draw.circle(screen,GREY, (i[3], smoke4_y), 30)
+
+    if counter == 80:
+        smoke_list.append([smoke1_x, smoke2_x, smoke3_x, smoke4_x])
+        counter = 0
+    counter += 1
 
     # Chassi
     pygame.draw.rect(screen, RED, [chassi_x, chassi_y, 125, 30])

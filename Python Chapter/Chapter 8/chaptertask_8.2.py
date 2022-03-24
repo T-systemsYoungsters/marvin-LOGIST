@@ -16,7 +16,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-snow_list = []
+
 pygame.init()
  
 # Set the width and height of the screen [width, height]
@@ -37,7 +37,7 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
- 
+    snow_list = []
     # --- Game logic should go here
  
     # --- Screen-clearing code goes here

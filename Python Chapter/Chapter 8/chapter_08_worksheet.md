@@ -8,7 +8,14 @@ rect_x += 1
 
 # 2. The example code to bounce a rectangle used a total of four variables. What did each variable represent?
 
+- rect_x: starting position of the rectangle (X axis)
+- rect_y: starting position of the rectangle (Y axis)
+- rect_change_x: movement vector, speed and direction of the rectangle (X axis)
+- rect_change_y: movement vector, speed and direction of the rectangle (Y axis)
+
 # 3. If the screen is 400 pixels tall, and the shape is 20 pixels high, at what point should the code check to see if the shape is in contact with the bottom of the screen.
+
+- 
 
 # 4. Explain what is wrong with the following code (explain it, don't just correct the code):
 ```
@@ -16,7 +23,17 @@ if rect_y > 450 or rect_y < 0:
     rect_y = rect_y * -1
 ```
 
+Correct:
+```
+if rect_y > 450 or rect_y < 0:
+    rect_change_y = rect_change_y * -1
+```
+
+- rect_change_y is the change vector and need to be changed to the other direction (* -1 change the sign for the coordinates)
+
 # 5. A student is animating a stick figure. He creates separate variables for tracking the position of the head, torso, legs, and arms. When the figure moves to the right he adds one to each of the variables. Explain an easier way to do this that only requires one pair of x, y variables. (And no, the answer has nothing to do with a list.)
+
+- add a vector to move
 
 # 6. When drawing a starry background, explain why it doesn't work to put code like this in the main program loop:
 ```
