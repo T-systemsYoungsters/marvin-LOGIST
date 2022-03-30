@@ -15,7 +15,7 @@ rect_x += 1
 
 # 3. If the screen is 400 pixels tall, and the shape is 20 pixels high, at what point should the code check to see if the shape is in contact with the bottom of the screen.
 
-- 
+- check the bottom of the screen by y>380 because the shape is 20 pixels high
 
 # 4. Explain what is wrong with the following code (explain it, don't just correct the code):
 ```
