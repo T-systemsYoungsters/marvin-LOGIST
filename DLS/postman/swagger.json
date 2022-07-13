@@ -1,0 +1,5762 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cloud4Log API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v2"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/organizations/{organizationKey}/load-carrier-templates": {
+      "get": {
+        "operationId": "getLoadCarrierTemplates",
+        "description": "Get all permitted load carrier templates of this organization",
+        "x-dls-requiredOrganizationPermission": "loadcarrier_templates_read",
+        "tags": [
+          "loadCarrierTemplates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Load carrier types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLoadCarrierTemplatesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postLoadCarrierTemplate",
+        "description": "Create a new load carrier template",
+        "x-dls-requiredOrganizationPermission": "loadcarrier_templates_create",
+        "tags": [
+          "loadCarrierTemplates",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPatchLoadCarrierTemplate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Load carrier template was created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadCarrierTemplate"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organizations/{organizationKey}/load-carrier-templates/{loadCarrierTemplateKey}": {
+      "patch": {
+        "operationId": "patchLoadCarrierTemplate",
+        "description": "Modify an existing load carrier template",
+        "x-dls-requiredOrganizationPermission": "loadcarrier_templates_modify",
+        "tags": [
+          "loadCarrierTemplates",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/loadCarrierTemplateKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPatchLoadCarrierTemplate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Load carrier type was modified"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteLoadCarrierTemplate",
+        "x-dls-requiredOrganizationPermission": "loadcarrier_templates_delete",
+        "description": "Delete an existing load carrier template",
+        "tags": [
+          "loadCarrierTemplates",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/loadCarrierTemplateKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Load carrier type was deleted"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/load-carriers": {
+      "post": {
+        "description": "Add a load carrier to a delivery note The delivery note bundle must be in status 'open'\n",
+        "operationId": "postLoadCarrier",
+        "x-dls-requiredOrganizationSitePermission": "loadcarrier_create",
+        "tags": [
+          "load carriers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostLoadCarrierRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created load carrier with generated id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadCarrier"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "get": {
+        "description": "get all load carriers for a delivery note",
+        "operationId": "getLoadCarriers",
+        "x-dls-requiredOrganizationSitePermission": "loadcarrier_read",
+        "tags": [
+          "load carriers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Load carriers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LoadCarrier"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "put": {
+        "description": "replace load carriers. the delivery note bundle must be open",
+        "operationId": "putLoadCarrier",
+        "x-dls-requiredOrganizationSitePermission": "loadcarrier_modify",
+        "tags": [
+          "load carriers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutLoadCarrierRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Load carrier was modified"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/load-carriers/{loadCarrierKey}": {
+      "patch": {
+        "description": "update a load carrier. the delivery note bundle must be open",
+        "operationId": "patchLoadCarrier",
+        "x-dls-requiredOrganizationSitePermission": "loadcarrier_modify",
+        "tags": [
+          "load carriers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/loadCarrierKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchLoadCarrierRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Load carrier was modified"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a load carrier from a delivery note. The delivery note bundle must be in status 'open'\n",
+        "operationId": "deleteLoadCarrier",
+        "x-dls-requiredOrganizationSitePermission": "loadcarrier_delete",
+        "tags": [
+          "load carriers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/loadCarrierKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Load carrier was deleted"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/signature-pads/{signaturePadType}": {
+      "post": {
+        "description": "Create new signature pad for checkout or checkin",
+        "operationId": "createSignaturePad",
+        "x-dls-requiredOrganizationSitePermission": "signature_pads_create",
+        "tags": [
+          "signature pads"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/SignaturePadTypeParam"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "One signature pad instance. Valid for 10 minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSignaturePadResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/signature-pads/{signaturePadType}/signature": {
+      "get": {
+        "description": "Get a signature from a signature pad for checkout or checkin. The token is the getToken from the signature pad creation request.\n",
+        "operationId": "getSignatureFromSignaturePad",
+        "x-dls-requiredOrganizationSitePermission": "signature_pads_read",
+        "tags": [
+          "signature pads"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/SignaturePadTypeParam"
+          },
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/PNGFileResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/attachments/file/{fileName}": {
+      "post": {
+        "description": "Add a new attachment to a existing delivery note The delivery note bundle must be in status 'open' Accepted Formats are jpg, png, heic, heif and pdf\n",
+        "operationId": "postAttachmentToDeliveryNote",
+        "x-dls-requiredOrganizationSitePermission": "attachment_create",
+        "tags": [
+          "attachments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/fileNameParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AttachmentFile"
+        },
+        "responses": {
+          "200": {
+            "description": "Attachment with generated _key and mimeType infos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/attachments/{attachmentKey}": {
+      "get": {
+        "description": "get a single attachment for a delivery note",
+        "operationId": "getAttachment",
+        "x-dls-requiredOrganizationSitePermission": "attachment_read",
+        "tags": [
+          "attachments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/attachmentKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment",
+            "$ref": "#/components/requestBodies/AttachmentFile"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a attachment from a delivery note. The delivery note bundle must be in status 'open'",
+        "operationId": "deleteAttachment",
+        "x-dls-requiredOrganizationSitePermission": "attachment_delete",
+        "tags": [
+          "attachments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/attachmentKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Attachment was deleted"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/attachments": {
+      "get": {
+        "description": "get a list of attachments for a single delivery note",
+        "operationId": "getAttachmentsForDeliveryNote",
+        "x-dls-requiredOrganizationSitePermission": "attachment_read",
+        "tags": [
+          "attachments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAttachmentsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "login user and get initial user, organization and organization site data with permissions\n",
+        "operationId": "postLogin",
+        "security": [],
+        "tags": [
+          "users",
+          "auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "login response data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "logout the user",
+        "operationId": "postLogout",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "users",
+          "auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyArray"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "successful logout"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles": {
+      "post": {
+        "description": "create new delivery note bundle",
+        "operationId": "postNewBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_create",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostBundleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "result from operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostBundleResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "get": {
+        "description": "get overview list of all delivery note bundles",
+        "operationId": "getBundles",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_read",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "overview list of delivery note bundles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryNoteBundlesOverview"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}": {
+      "get": {
+        "description": "get one delivery note bundle by delivery note bundle key",
+        "operationId": "getBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_read",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data of one delivery note bundle with delivery note metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryNoteBundle"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "patch": {
+        "description": "FIRST DRAFT\nupdate name and supply chain of a delivery note bundle.\nThe bundle must be in status 'open'\n",
+        "operationId": "patchBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_update",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchBundleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "delivery note bundle updated successfully"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "description": "delete one delivery note bundle by delivery note bundle key if bundle status is 'open'\nthe delivery notes (with attachments and load carriers) remain in pool\n",
+        "operationId": "deleteBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_delete",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "delivery note bundle was deleted"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles-merge": {
+      "post": {
+        "description": "FIRST DRAFT\nMerge multiple delivery note bundles into a new one. All bundles\nmust have status 'open'. The supply chain and name are taken from\nthe first bundle in the array\n",
+        "operationId": "postMergeBundles",
+        "x-dls-requiredOprganizationSitePermission": "delivery_note_bundles_merge",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/MergeDeliveryNoteBundle"
+        },
+        "responses": {
+          "200": {
+            "description": "result from operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/checkout": {
+      "post": {
+        "description": "FIRST DRAFT\nCheckout a delivery note bundle. The bundle status goes into 'sent'\n",
+        "operationId": "postDeliveryNoteBundleCheckout",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_checkout",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PNGFileRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "Data to view the wallet invite page URL as a QR code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BundleCheckoutResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles-checkout-multiple": {
+      "post": {
+        "description": "FIRST DRAFT\nCheckout multiple delivery note bundles. All bundles must be in status 'open'.\nThe supply chain data is used from the first delivery note bundle key.\n",
+        "operationId": "postDeliveryNoteBundleCheckoutMultiple",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_checkout_multiple",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeliveryNoteCheckoutMultiple"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data to view the wallet invite page URL as a QR code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BundleCheckoutResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/carrier/delivery-note-bundles": {
+      "get": {
+        "description": "get overview list of all delivery note bundles for the carrier",
+        "operationId": "getCarrierBundles",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_read",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "overview list of delivery note bundles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarrierDeliveryNoteBundlesOverview"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/carrier/delivery-note-bundles/{deliveryNoteBundleKey}": {
+      "get": {
+        "description": "Get one delivery note bundle for a checkin.",
+        "operationId": "getCarrierBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_read",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data for one delivery note bundle.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarrierDeliveryNoteBundle"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-note-bundles": {
+      "get": {
+        "description": "get overview list of all delivery note bundles for the consignee",
+        "operationId": "getConsigneeBundles",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_read",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "overview list of delivery note bundles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryNoteBundlesOverview"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-note-bundles/{deliveryNoteBundleKey}": {
+      "get": {
+        "description": "Get one delivery note bundle for a checkin.",
+        "operationId": "getConsigneeBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_read",
+        "tags": [
+          "delivery note bundles"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data for one delivery note bundle.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsigneeDeliveryNoteBundle"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-note-bundles/checkin": {
+      "get": {
+        "description": "Get devliery note bundles for a checkin via access token\nfrom a wallet\n",
+        "operationId": "getConsigneeBundlesForCheckin",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_read",
+        "tags": [
+          "delivery note bundles",
+          "checkin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of delivery note bundles which belong to a checkin\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetConsigneeDeliveryNoteBundlesCheckinResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "post": {
+        "description": "Complete the checkin process of delivery note bundles by submitting\nthe delivery note bundle keys to checkin an the driver signature.\nThe signatures must be base64 encoded pngs.\n",
+        "operationId": "postConsigneeCheckinBundles",
+        "x-dls-requiredOrganizationSitePermission": "delivery_note_bundles_checkin",
+        "tags": [
+          "delivery note bundles",
+          "checkin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostConsigneeCheckinBundlesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The checkin process was completed."
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/carrier/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/pdf": {
+      "get": {
+        "description": "Get the pdf of a carrier delivery note.\n",
+        "operationId": "getCarrierDeliveryNotePdf",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains pdf in binary format",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-notes": {
+      "get": {
+        "description": "Get consignee delivery notes from delivery note pool.\nDoes not include load carriers.\n",
+        "operationId": "getConsigneeDeliveryNotesMetadataInPool",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains list of delivery notes metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsigneeDeliveryNotesInPool"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-notes/{deliveryNoteKey}/pdf": {
+      "get": {
+        "description": "Get a delivery note pdf from the consignee delivery note pool.\n",
+        "operationId": "getConsigneeDeliveryNoteFromPool",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The body contains the delivery note pdf in binary format.\n",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-notes/{deliveryNoteKey}/signed-pdf": {
+      "get": {
+        "description": "Get a signed delivery note pdf from the consignee delivery note pool.\n",
+        "operationId": "getConsigneeSignedDeliveryNoteFromPool",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The body contains the delivery note pdf in binary format.\n",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-note-pdfs": {
+      "get": {
+        "description": "Get all delivery note pdfs as merged pdf from consignee delivery\nnote bundle. If the delivery note bundle does not have any delivery\n notes an http status code 400 is returned.\n",
+        "operationId": "getConsigneeDeliveryNotePdfsForBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains array of pdfs in binary format",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/pdf/{fileName}": {
+      "post": {
+        "description": "Adds the posted delivery note pdf to the delivery note bundle.\nThe pdf is converted to pdf/a3.\n",
+        "operationId": "postDeliveryNoteIntoBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_create",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/fileNameParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PDFFileRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "result from operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDeliveryNoteResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-notes/pdf/{fileName}": {
+      "post": {
+        "description": "Adds the posted delivery note pdf to the delivery note pool.\nThe pdf is converted to pdf/a3.\n",
+        "operationId": "postDeliveryNoteToPool",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_create",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/fileNameParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PDFFileRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "result from operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDeliveryNoteResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/numbered-pdf/{fileName}": {
+      "post": {
+        "description": "Adds the posted delivery note pdf to the delivery note bundle.\nThe pdf is converted to pdf/a3.\nThe waybill numbers are collected from the PDF and will be returned\n",
+        "operationId": "postDeliveryNoteIntoBundleAndReturnNumbers",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_create",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/fileNameParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PDFFileRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "result from operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDeliveryNoteResponseWithWaybillNumbers"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-notes/numbered-pdf/{fileName}": {
+      "post": {
+        "description": "Adds the posted delivery note pdf to the delivery note pool.\nThe pdf is converted to pdf/a3.\nThe waybill numbers are collected from the PDF and will be returned\n",
+        "operationId": "postDeliveryNoteToPoolAndReturnNumbers",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_create",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/fileNameParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PDFFileRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "result from operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateDeliveryNoteResponseWithWaybillNumbers"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/pdf": {
+      "get": {
+        "description": "get delivery note pdf from delivery note bundle",
+        "operationId": "getDeliveryNote",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains pdf in binary format",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/signed-pdf": {
+      "get": {
+        "description": "get signed delivery note pdf from delivery note bundle",
+        "operationId": "getSignedDeliveryNote",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains pdf in binary format",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-note-pdfs": {
+      "get": {
+        "description": "Get all delivery note pdfs as merged pdf from delivery note bundle.\nIf the delivery note bundle does not have any delivery note an http\nstatus code 400 is returned.\n",
+        "operationId": "getDeliveryNotePdfsForBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains array of pdfs in binary format",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-notes": {
+      "get": {
+        "description": "Get delivery notes metadata from delivery note pool.\nDoes not include load carriers.\n",
+        "operationId": "getDeliveryNotesMetadataInPool",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains list of delivery notes metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryNoteInPoolArray"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes": {
+      "post": {
+        "description": "Add existing delivery notes into an existing delivery note bundle.\nThe delivery note must not in any bundle when adding.\nThe delivery note bundle must be in status 'open'.\n",
+        "operationId": "postExistingDeliveryNoteIntoExistingBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_add_to_bundle",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KeyArrayType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "All delivery note keys in the array were added to the\ndelivery note bundles.\n"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "description": "Remove existing delivery notes from an existing delivery note bundle.\nThe delivery note must be in any bundle when removing.\nThe delivery note bundle must be in status 'open'.\nThe delevery notes would become detached from bundle and remain in pool\n",
+        "operationId": "deleteDeliveryNotesFromDeliveryNoteBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_in_bundles_delete",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KeyArrayType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "All delivery note keys in the array were removed from the\ndelivery note bundle.\n"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "get": {
+        "description": "Get delivery note metadata from a delivery note bundle.\nDoes not include load carriers.\n",
+        "operationId": "getDeliveryNoteMetadataInBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains list of delivery notes metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeliveryNoteArray"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-notes/{deliveryNoteKey}/pdf": {
+      "get": {
+        "description": "get delivery note pdf from delivery note pool",
+        "operationId": "getDeliveryNoteFromPool",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_read",
+        "tags": [
+          "delivery notes",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "body contains pdf in binary format",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-notes/{deliveryNoteKey}": {
+      "patch": {
+        "description": "FIRST DRAFT\nPatch a delivery note. If the deliveryNote belongs to a delivery\nnote bundle the name can only be updated if the bundle is in state\nopen.\n",
+        "operationId": "patchDeliveryNoteMetadata",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_update",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchDeliveryNoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The delivery note was updated."
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a delivery note with its pdf. The delivery note must not in\na delivery note bundle. Remaining load carriers or attachments are\nalso deleted.\n",
+        "operationId": "deleteDeliveryNote",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_delete",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The delivery note was deleted."
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}": {
+      "delete": {
+        "description": "FIRST DRAFT Removes a delivery note from a bundle. Deletes also the load carriers that hang on the delivery note. The bundles must be in status 'open'\n",
+        "operationId": "deleteDeliveryNoteInBundle",
+        "x-dls-requiredOrganizationSitePermission": "delivery_notes_delete",
+        "tags": [
+          "delivery notes"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "the delivery note was removed from the bundle"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/discrepancies/choices": {
+      "get": {
+        "description": "get all possible discrepancies reasons and units",
+        "operationId": "getDiscrepanciesChoices",
+        "tags": [
+          "discrepancies"
+        ],
+        "responses": {
+          "200": {
+            "description": "discrepancies choices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscrepanciesChoices"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/signature-pads/{signaturePadType}": {
+      "patch": {
+        "description": "Update the signature in a signature pad. The token is the carrierAccessToken\nfrom the signature pad creation request.\n",
+        "operationId": "externalPatchSignaturePad",
+        "security": [],
+        "tags": [
+          "external",
+          "signature pads"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SignaturePadTypeParam"
+          },
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PNGFileRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "Return accessToken to access the wallet invite page or gate page\nas soon as the checkout process is finished.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "accessToken"
+                  ],
+                  "properties": {
+                    "accessToken": {
+                      "$ref": "#/components/schemas/Token64LengthType"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "signature was updated in signature pad"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/wallet-invite": {
+      "get": {
+        "description": "Returns all data that is necessary to build the wallet invite page.\nThe token is the accessToken from the checkout response.\n",
+        "operationId": "externalGetWalletInviteData",
+        "security": [],
+        "tags": [
+          "external",
+          "wallet invite"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response contains wallet data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletInviteData"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/gate": {
+      "get": {
+        "description": "Returns all data that is necessary to build the gate page. The token is the accessToken from a wallet.\n",
+        "operationId": "externalGetGateData",
+        "security": [],
+        "tags": [
+          "external",
+          "gate"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response contains gate data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GateData"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/signature-pads/{signaturePadType}/bundle-data": {
+      "get": {
+        "description": "Return all bundle data that is necessary for the carrier to sign\nthe checkout or checkin. The token is the carrierAccessToken\n",
+        "operationId": "externalGetDataForSignature",
+        "security": [],
+        "tags": [
+          "external",
+          "signature pads"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SignaturePadTypeParam"
+          },
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data to show what to sign",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignaturePadBundles"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/signature-pads/{signaturePadType}/bundle-data/pdf": {
+      "get": {
+        "description": "return the pdf with all information from all bundles that belong to\nthe checkout\n",
+        "operationId": "externalGetPdfForSignature",
+        "security": [],
+        "tags": [
+          "external",
+          "signature pads",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SignaturePadTypeParam"
+          },
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "pdf with all information from the bundles that belong to the\ncheckout\n",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/test-string-length": {
+      "post": {
+        "description": "Test accepted string length",
+        "operationId": "externalTestStringLength",
+        "security": [],
+        "tags": [
+          "external"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "msg"
+                ],
+                "properties": {
+                  "msg": {
+                    "type": "string",
+                    "maxLength": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test was successfull",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/gate/delivery-notes/{deliveryNoteKey}/pdf": {
+      "get": {
+        "description": "Get a single delivery note pdf from a gate (checkout).\nThe token is the token from the gate url.\n",
+        "operationId": "externalGetGateDeliveryNotePdf",
+        "security": [],
+        "tags": [
+          "external",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The delivery note pdf",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/external/gate/delivery-note-pdfs": {
+      "get": {
+        "description": "Get all delivery note pdfs from a gate (checkout).\nThe token is the token from the gate url.\n",
+        "operationId": "externalGetGateDeliveryNotePdfs",
+        "security": [],
+        "tags": [
+          "external",
+          "pdf"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TokenTypeParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The delivery note pdf",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/BinaryFileType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/consignee/delivery-note-bundles/{deliveryNoteBundleKey}/delivery-notes/{deliveryNoteKey}/load-carriers": {
+      "post": {
+        "description": "Add a new load carrier to a existing delivery note.\nThe delivery note bundle must be in status 'sent'.\n",
+        "operationId": "postConsigneeLoadCarrier",
+        "x-dls-requiredOrganizationSitePermission": "loadcarrier_create",
+        "tags": [
+          "load carriers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostLoadCarrierRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created load carrier with generated id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoadCarrier"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "get": {
+        "description": "Returns all load carriers for a delivery note.\n",
+        "operationId": "getConsigneeLoadCarriers",
+        "x-dls-requiredOrganizationSitePermission": "loadcarrier_read",
+        "tags": [
+          "load carriers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Load carriers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LoadCarrier"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/delivery-note-bundle/{deliveryNoteBundleKey}/checkout/send-wallet-invite": {
+      "post": {
+        "operationId": "sendWalletInviteMailToDriver",
+        "description": "Send an E-Mail with a wallet invite link to the driver\n",
+        "x-dls-requiredOrganizationSitePermission": "send_wallet_invite_emails",
+        "tags": [
+          "organization sites",
+          "wallet invite notification"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/deliveryNoteBundleKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendNotificationEmailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Wallet invite eMail was send to driver"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}": {
+      "patch": {
+        "operationId": "patchOrganizationSite",
+        "description": "Modify an existing organization site",
+        "x-dls-requiredOrganizationSitePermission": "organization_site_modify",
+        "tags": [
+          "organization sites"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPatchOrganizationSiteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Modified organization site",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationSite"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "archiveOrganizationSite",
+        "description": "Archives an organization site. After this request, the site is marked as archived. Only read operations are possible after archive. A delete job will delete the site, if the site is no longer needs in supply chains and other.\n",
+        "x-dls-requiredOrganizationSitePermission": "organization_site_delete",
+        "tags": [
+          "organization sites"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archived organization site",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationSite"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/users": {
+      "get": {
+        "operationId": "getOrganizationSiteUsers",
+        "description": "Get all assigned users from organization site",
+        "x-dls-requiredOrganizationSitePermission": "user_read",
+        "tags": [
+          "organization sites",
+          "users"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assigned users to organization site",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInformation"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organizations": {
+      "get": {
+        "operationId": "getOrganizations",
+        "description": "Get all permitted organizations for user",
+        "x-dls-requiredUserPermission": "organization_read",
+        "tags": [
+          "organizations"
+        ],
+        "responses": {
+          "200": {
+            "description": "Permitted organizations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Organization"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postOrganization",
+        "description": "Create a new organization",
+        "x-dls-requiredUserPermission": "organization_create",
+        "tags": [
+          "organizations",
+          "admin"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostOrganizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organizations/{organizationKey}": {
+      "get": {
+        "operationId": "getOrganization",
+        "description": "Get all permitted organizations for user",
+        "x-dls-requiredOrganizationPermission": "organization_read",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Permitted organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "patchOrganization",
+        "description": "Modify an organization",
+        "x-dls-requiredOrganizationPermission": "organization_modify",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchOrganizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Modified organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organizations/{organizationKey}/organization-sites": {
+      "post": {
+        "operationId": "postOrganizationSite",
+        "description": "Create a new organization site, which belongs to {organizationKey}",
+        "x-dls-requiredOrganizationPermission": "organization_site_create",
+        "tags": [
+          "organizations",
+          "organization sites",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPatchOrganizationSiteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created organization site",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationSite"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organizations/{organizationKey}/users": {
+      "post": {
+        "operationId": "postUserToOrganization",
+        "description": "Create a new user and add this user to the organization.\nThe requesting user must have access to the organization the new user is added.\n",
+        "x-dls-requiredOrganizationPermission": "users_create",
+        "tags": [
+          "organizations",
+          "users",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostUserToOrganizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The user was create and added to the organization"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "get": {
+        "operationId": "getOrganizationUsers",
+        "description": "Get all assigned users from organization.\nThe organization must belong to the requesting user.\n",
+        "x-dls-requiredOrganizationPermission": "user_read",
+        "tags": [
+          "organizations",
+          "users"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assigned users to organization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInformation"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/platform/organization-sites": {
+      "get": {
+        "operationId": "getPlatformOrganisationsSites",
+        "description": "Get all organizations sites and GLN + metadata",
+        "tags": [
+          "platform"
+        ],
+        "responses": {
+          "200": {
+            "description": "All OrganizationSite",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationSite"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/public/organizations": {
+      "get": {
+        "description": "Get all organization names",
+        "operationId": "getPublicOrganizations",
+        "security": [],
+        "tags": [
+          "public",
+          "organizations"
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization names",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPublicOrganizationsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/public/reset-user-password": {
+      "put": {
+        "description": "Send link to reset the password.\nThe link is valid for 15 minutes.\n",
+        "operationId": "putPublicResetUserPassword",
+        "security": [],
+        "tags": [
+          "public",
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutPublicResetUserPassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Email with the reset password link was send to the provided\nemail address.\n"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/public/complete-reset-user-password": {
+      "post": {
+        "description": "Reset the user password with the provided password and the token.\n",
+        "operationId": "postPublicCompleteResetUserPassword",
+        "security": [],
+        "tags": [
+          "public",
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPublicCompleteResetUserPassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The user password was reset with the provided password.\nAny active session is removed.\n"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/managed-supply-chains": {
+      "post": {
+        "description": "create new managed supply chain for a organization site.",
+        "operationId": "postManagedSupplyChain",
+        "x-dls-requiredOrganizationSitePermission": "managed_supply_chains_create",
+        "tags": [
+          "managed supply chains",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostManagedSupplyChainRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "return document of the created managed supply chain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagedSupplyChain"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "get": {
+        "description": "Get all managed supply chains for a organization site.",
+        "operationId": "getManagedSupplyChains",
+        "x-dls-requiredOrganizationSitePermission": "managed_supply_chains_read",
+        "tags": [
+          "managed supply chains"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return all managed supply chains for a organization site",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagedSupplyChains"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/managed-supply-chains/{managedSupplyChainKey}": {
+      "delete": {
+        "description": "Delete a managed supply chain for a organization site.",
+        "operationId": "deleteManagedSupplyChains",
+        "x-dls-requiredOrganizationSitePermission": "managed_supply_chains_delete",
+        "tags": [
+          "managed supply chains",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/managedSupplyChainKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Managed supply chain was deleted."
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/supply-chains": {
+      "get": {
+        "operationId": "getSupplyChains",
+        "description": "Get all permitted supply chains of organization site",
+        "x-dls-requiredOrganizationSitePermission": "supplychain_read",
+        "tags": [
+          "supplychain"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Permitted supply chains for user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplyChainResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "post": {
+        "operationId": "postSupplyChain",
+        "description": "Create a new supply chain between organization site and target organization site",
+        "x-dls-requiredOrganizationSitePermission": "supplychain_create",
+        "tags": [
+          "supplychain",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetOrganizationSiteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Supply chain was created"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/organization-sites/{organizationSiteKey}/supply-chains/{targetOrganizationSiteKey}": {
+      "delete": {
+        "operationId": "deleteSupplyChain",
+        "description": "Delete a supply chain between organization site and target organization site",
+        "x-dls-requiredOrganizationSitePermission": "supplychain_delete",
+        "tags": [
+          "supplychain",
+          "admin"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/targetOrganizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Supply chain was delete"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{userKey}": {
+      "get": {
+        "operationId": "getUser",
+        "description": "Get user information.\nYou can only read the users you have access via an organization.\n",
+        "x-dls-requiredUserPermission": "user_read",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInformation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{userKey}/permissions": {
+      "patch": {
+        "operationId": "patchUserPermissions",
+        "description": "Modify permissions of a user",
+        "x-dls-requiredUserPermission": "user_permissions_modify",
+        "tags": [
+          "users",
+          "permissions"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPermissionsType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New user permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPermissionsType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{userKey}/organizations/{organizationKey}/permissions": {
+      "patch": {
+        "operationId": "patchUserOrganizationPermissions",
+        "description": "Modify permissions of a user on organization level",
+        "x-dls-requiredOrganizationPermission": "user_organization_permissions_modify",
+        "tags": [
+          "users",
+          "organization",
+          "permissions"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationPermissionsType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New user organization permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationPermissionsType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{userKey}/organization-sites/{organizationSiteKey}/permissions": {
+      "patch": {
+        "operationId": "patchUserOrganizationSitePermissions",
+        "description": "Modify permissions of a user on organization site level",
+        "x-dls-requiredOrganizationSitePermission": "user_organization_site_permissions_modify",
+        "tags": [
+          "users",
+          "organization sites",
+          "permissions"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationSitePermissionsType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New user organization site permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationSitePermissionsType"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{userKey}/organizations/{organizationKey}": {
+      "post": {
+        "operationId": "assignUserToOrganization",
+        "description": "Assign user to this organization",
+        "x-dls-requiredOrganizationPermission": "user_assign",
+        "tags": [
+          "users",
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User assigned to organization"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "unassignUserFromOrganization",
+        "description": "Unassign user from this organization",
+        "x-dls-requiredOrganizationPermission": "user_unassign",
+        "tags": [
+          "users",
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User unassigned to organization"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{userKey}/organization-sites/{organizationSiteKey}": {
+      "post": {
+        "operationId": "assignUserToOrganizationSite",
+        "description": "Assign user to this organization site",
+        "x-dls-requiredOrganizationSitePermission": "user_assign",
+        "tags": [
+          "users",
+          "organization sites"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User assigned to organization site"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "unassignUserFromOrganizationSite",
+        "description": "Unassign user from this organization site",
+        "x-dls-requiredOrganizationSitePermission": "user_unassign",
+        "tags": [
+          "users",
+          "organization sites"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/organizationSiteKeyParam"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User unassigned to organization site"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{userKey}/organizations/{organizationKey}/sites": {
+      "get": {
+        "operationId": "getAccessibleUserSites",
+        "description": "Get accessible organization sites for the user",
+        "x-dls-requiredOrganizationPermission": "user_read",
+        "tags": [
+          "users",
+          "organizations",
+          "organization sites"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userKeyParam"
+          },
+          {
+            "$ref": "#/components/parameters/organizationKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accessible organization sites for the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationSite"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users": {
+      "patch": {
+        "operationId": "patchBasicUser",
+        "description": "Patch basic user information, like fullName",
+        "x-dls-requiredUserPermission": "user_modify",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchBasicUserInformationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInformation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/request-change-password": {
+      "put": {
+        "operationId": "requestChangePassword",
+        "description": "Request the change of the password of the current user. After this the request must be completed with a 2fa code in another request, which will be sent to the users email.",
+        "x-dls-requiredUserPermission": "user_modify",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestChangePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password change request was successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TwoFaExpiry"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/complete-change-password": {
+      "post": {
+        "operationId": "completeChangePassword",
+        "description": "Completes the password request with the correct 2fa code given in the body.\nThe current session is closed.\n",
+        "x-dls-requiredUserPermission": "user_modify",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFaCodeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Password change was successfully"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/request-change-email-address": {
+      "put": {
+        "operationId": "requestChangeEmailAddress",
+        "description": "Request the change of the email address of the current user.\nAfter this an 2fa code is send to the old email address and another\n2fa code is send to the new email address. Both 2fa codes are needed\nto complete the email address change.\n",
+        "x-dls-requiredUserPermission": "user_modify",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeEmailAddressRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Expiry of 2fa codes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TwoFaExpiry"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/complete-change-email-address": {
+      "post": {
+        "operationId": "completeChangeEmailAddress",
+        "description": "Completes the email address change with both 2fa codes. One from the\nold email address and one from the new email address.\nThe current session is closed.\n",
+        "x-dls-requiredUserPermission": "user_modify",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteChangeEmailAddressRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Email changed successfully"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/signature": {
+      "put": {
+        "description": "Set or update the user signature",
+        "operationId": "changeUsersSignature",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PNGFileRequest"
+        },
+        "responses": {
+          "204": {
+            "description": "signature was updated for user"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/terms-of-service": {
+      "post": {
+        "description": "Accept latest version of terms of of service",
+        "operationId": "postAcceptTermsOfService",
+        "tags": [
+          "users",
+          "terms of service"
+        ],
+        "responses": {
+          "204": {
+            "description": "Accepted latest version of terms of service"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultErrorResponse"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "description": "Login",
+        "additionalProperties": false,
+        "required": [
+          "emailAddress",
+          "password"
+        ],
+        "properties": {
+          "emailAddress": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "password": {
+            "$ref": "#/components/schemas/PasswordType"
+          }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "description": "getActiveUserByEmail response",
+        "additionalProperties": true,
+        "required": [
+          "_key",
+          "_id",
+          "password",
+          "salt",
+          "active",
+          "emailAddress",
+          "fullName",
+          "permissions",
+          "sessionId"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "_id": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "salt": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "emailAddress": {
+            "$ref": "#/components/schemas/EmailAddressType"
+          },
+          "fullName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/OrganizationPermissionsType"
+          },
+          "sessionId": {
+            "$ref": "#/components/schemas/Base64Type"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "description": "Login response data",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "emailAddress",
+          "fullName",
+          "sessionId",
+          "termsOfService",
+          "organizations"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "emailAddress": {
+            "$ref": "#/components/schemas/EmailAddressType"
+          },
+          "fullName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "sessionId": {
+            "$ref": "#/components/schemas/Base64Type"
+          },
+          "termsOfService": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "version",
+              "accepted",
+              "dateAccepted"
+            ],
+            "properties": {
+              "version": {
+                "type": "number",
+                "minimum": 1
+              },
+              "accepted": {
+                "type": "boolean"
+              },
+              "dateAccepted": {
+                "$ref": "#/components/schemas/TimestampType"
+              }
+            }
+          },
+          "organizations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Organization"
+            }
+          }
+        }
+      },
+      "PostBundleRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "create new bundle with supply chain keys",
+        "required": [
+          "name",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "deliveryNoteKeys"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "deliveryNoteKeys": {
+            "$ref": "#/components/schemas/KeyArrayType"
+          }
+        }
+      },
+      "PatchBundleRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "update name, consignor, carrier or consignee key",
+        "required": [
+          "name",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "carrierNameOutgoing",
+          "carrierNumberPlateOutgoing",
+          "carrierEmailAddressOutgoing"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierNameOutgoing": {
+            "type": "string"
+          },
+          "carrierNumberPlateOutgoing": {
+            "type": "string"
+          },
+          "carrierEmailAddressOutgoing": {
+            "type": "string"
+          }
+        }
+      },
+      "PatchDeliveryNoteRequest": {
+        "additionalProperties": false,
+        "description": "Update metadata of a delivery note",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "announcedDate": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "orderNumber": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          }
+        }
+      },
+      "SupplyChain": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Full name of target organization site and the key",
+        "required": [
+          "name",
+          "organizationSiteKey"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "organizationSiteKey": {
+            "$ref": "#/components/schemas/KeyType"
+          }
+        }
+      },
+      "SupplyChainResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Permitted supply chains for user grouped by type of organization site",
+        "required": [
+          "consignor",
+          "carrier",
+          "consignee"
+        ],
+        "properties": {
+          "consignor": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplyChain"
+            }
+          },
+          "carrier": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplyChain"
+            }
+          },
+          "consignee": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplyChain"
+            }
+          }
+        }
+      },
+      "PostManagedSupplyChainRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Create new managed supply chain",
+        "required": [
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey"
+        ],
+        "properties": {
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          }
+        }
+      },
+      "ManagedSupplyChain": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "describes a managed supply chain",
+        "required": [
+          "_key",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          }
+        }
+      },
+      "ManagedSupplyChainWithWeight": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "describes a managed supply chain",
+        "required": [
+          "_key",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "weight"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "weight": {
+            "description": "Number of times this managed supply chain was used in the last 15 times.",
+            "type": "number"
+          }
+        }
+      },
+      "ManagedSupplyChains": {
+        "type": "array",
+        "additionalProperties": false,
+        "items": {
+          "$ref": "#/components/schemas/ManagedSupplyChainWithWeight"
+        }
+      },
+      "DiscrepanciesChoices": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Choices for discrepancies",
+        "required": [
+          "reasons",
+          "units"
+        ],
+        "properties": {
+          "reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiscrepanciesReason"
+            }
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiscrepanciesUnit"
+            }
+          }
+        }
+      },
+      "DiscrepanciesReason": {
+        "type": "string",
+        "enum": [
+          "OVER_DELIVERED",
+          "UNDER_DELIVERED",
+          "NOT_ANNOUNCED",
+          "REFUSAL_OF_ACCEPTANCE"
+        ]
+      },
+      "DiscrepanciesUnit": {
+        "type": "string",
+        "enum": [
+          "PIECE",
+          "QUARTER_DISPLAY",
+          "HALF_DISPLAY",
+          "CARTON",
+          "PALLET",
+          "COLLI"
+        ]
+      },
+      "TargetOrganizationSiteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "targetOrganizationSiteKey"
+        ],
+        "properties": {
+          "targetOrganizationSiteKey": {
+            "$ref": "#/components/schemas/KeyType"
+          }
+        }
+      },
+      "DeliveryNoteBundleOverview": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "dateCreated",
+          "dateShipped",
+          "_key",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "status",
+          "numberOfDeliveryNotes",
+          "accessToken"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "dateShipped": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BundleStatus"
+          },
+          "numberOfDeliveryNotes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "announcedDate": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "accessToken": {
+            "$ref": "#/components/schemas/Token64LengthXorEmptyType"
+          }
+        }
+      },
+      "DeliveryNoteBundlesOverview": {
+        "type": "array",
+        "additionalProperties": false,
+        "items": {
+          "$ref": "#/components/schemas/DeliveryNoteBundleOverview"
+        }
+      },
+      "ConsigneeDeliveryNoteBundlesForCheckin": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "status",
+          "name",
+          "dateCreated",
+          "dateShipped",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "deliveryNotes"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BundleStatus"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "dateShipped": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "deliveryNotes": {
+            "$ref": "#/components/schemas/DeliveryNoteArray"
+          }
+        }
+      },
+      "DeliveryNoteBundle": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "name",
+          "dateCreated",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "status",
+          "carrierNameOutgoing",
+          "carrierNumberPlateOutgoing",
+          "carrierEmailAddressOutgoing",
+          "deliveryNotes"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BundleStatus"
+          },
+          "carrierNameOutgoing": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierNumberPlateOutgoing": {
+            "type": "string"
+          },
+          "carrierEmailAddressOutgoing": {
+            "type": "string"
+          },
+          "deliveryNotes": {
+            "$ref": "#/components/schemas/DeliveryNoteArray"
+          }
+        }
+      },
+      "ConsigneeDeliveryNoteBundle": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "name",
+          "dateCreated",
+          "dateShipped",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "status",
+          "deliveryNotes"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "dateShipped": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "status": {
+            "enum": [
+              "sent",
+              "closed"
+            ]
+          },
+          "deliveryNotes": {
+            "$ref": "#/components/schemas/DeliveryNoteArray"
+          }
+        }
+      },
+      "CarrierDeliveryNoteBundle": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "name",
+          "dateCreated",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "status",
+          "carrierNumberPlateOutgoing",
+          "carrierNameOutgoing",
+          "dateShipped",
+          "deliveryNotes"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "status": {
+            "enum": [
+              "sent",
+              "closed"
+            ]
+          },
+          "carrierNumberPlateOutgoing": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierNameOutgoing": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateShipped": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "deliveryNotes": {
+            "$ref": "#/components/schemas/DeliveryNoteArray"
+          }
+        }
+      },
+      "CarrierDeliveryNoteBundleOverview": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "dateCreated",
+          "dateShipped",
+          "_key",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "status",
+          "numberOfDeliveryNotes",
+          "carrierNumberPlateOutgoing",
+          "carrierNameOutgoing"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "dateShipped": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BundleStatus"
+          },
+          "numberOfDeliveryNotes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "announcedDate": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "carrierNumberPlateOutgoing": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierNameOutgoing": {
+            "$ref": "#/components/schemas/NameType"
+          }
+        }
+      },
+      "CarrierDeliveryNoteBundlesOverview": {
+        "type": "array",
+        "additionalProperties": false,
+        "items": {
+          "$ref": "#/components/schemas/CarrierDeliveryNoteBundleOverview"
+        }
+      },
+      "DeliveryNoteCheckoutMultiple": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "deliveryNoteBundleKeys",
+          "carrierSignature"
+        ],
+        "properties": {
+          "deliveryNoteBundleKeys": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "$ref": "#/components/schemas/KeyType"
+            }
+          },
+          "carrierSignature": {
+            "$ref": "#/components/schemas/Base64Type",
+            "description": "base64 encoded png of the signature"
+          }
+        }
+      },
+      "CreateDeliveryNoteResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "fileName",
+          "dateCreated"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "fileName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          }
+        }
+      },
+      "CreateDeliveryNoteResponseWithWaybillNumbers": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "dateCreated",
+          "fileName",
+          "waybillNumbers",
+          "ocrSuccessful"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "fileName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "waybillNumbers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NameType"
+            }
+          },
+          "ocrSuccessful": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DeliveryNote": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "dateCreated",
+          "fileName",
+          "loadCarriers"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "announcedDate": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "orderNumber": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "loadCarriers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoadCarrier"
+            }
+          }
+        }
+      },
+      "DeliveryNoteArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DeliveryNote"
+        }
+      },
+      "DeliveryNoteInPool": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "dateCreated",
+          "fileName",
+          "loadCarriers",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "deliveryNoteBundleKey",
+          "deliveryNoteBundleName",
+          "deliveryNoteBundleStatus"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "fileName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "announcedDate": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "orderNumber": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "number": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "loadCarriers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoadCarrier"
+            }
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "deliveryNoteBundleKey": {
+            "$ref": "#/components/schemas/KeyXorEmptyKeyType"
+          },
+          "deliveryNoteBundleName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "deliveryNoteBundleStatus": {
+            "enum": [
+              "-",
+              "open",
+              "sent",
+              "closed"
+            ]
+          }
+        }
+      },
+      "DeliveryNoteInPoolArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DeliveryNoteInPool"
+        }
+      },
+      "ConsigneeDeliveryNoteInPool": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "dateCreated",
+          "dateShipped",
+          "dateReceived",
+          "fileName",
+          "loadCarriers",
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "deliveryNoteBundleKey",
+          "deliveryNoteBundleName",
+          "deliveryNoteBundleStatus"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "dateShipped": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "dateReceived": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "fileName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "announcedDate": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "orderNumber": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "number": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "loadCarriers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoadCarrier"
+            }
+          },
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "deliveryNoteBundleKey": {
+            "$ref": "#/components/schemas/KeyXorEmptyKeyType"
+          },
+          "deliveryNoteBundleName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "deliveryNoteBundleStatus": {
+            "enum": [
+              "sent",
+              "closed"
+            ]
+          }
+        }
+      },
+      "ConsigneeDeliveryNotesInPool": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ConsigneeDeliveryNoteInPool"
+        }
+      },
+      "Organization": {
+        "type": "object",
+        "description": "one organization the user belongs to",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "name",
+          "gln",
+          "address",
+          "color",
+          "sites"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gln": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorType"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/OrganizationPermissionsType"
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationSite"
+            }
+          }
+        }
+      },
+      "PostOrganizationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "gln",
+          "address"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "gln": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorType",
+            "default": "#ea0a8e"
+          }
+        }
+      },
+      "PatchOrganizationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "gln": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorType"
+          }
+        }
+      },
+      "OrganizationSite": {
+        "type": "object",
+        "description": "one site of an organization",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "address",
+          "gln",
+          "name",
+          "phoneNumbers",
+          "type"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "address": {
+            "type": "string"
+          },
+          "gln": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "phoneNumbers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "type": {
+            "$ref": "#/components/schemas/OrganizationSiteType"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/OrganizationSitePermissionsType"
+          }
+        }
+      },
+      "AttachmentResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "contentType",
+          "fileName",
+          "dateCreated"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "contentType": {
+            "type": "string",
+            "enum": [
+              "application/pdf",
+              "image/heic",
+              "image/heif",
+              "image/jpeg",
+              "image/png"
+            ]
+          },
+          "fileName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          }
+        }
+      },
+      "GetAttachmentsResponse": {
+        "type": "array",
+        "additionalProperties": false,
+        "items": {
+          "$ref": "#/components/schemas/AttachmentResponse"
+        }
+      },
+      "PostPatchLoadCarrierTemplate": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Type of LoadCarrier",
+        "required": [
+          "name",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "LoadCarrierTemplate": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Template for LoadCarrierType",
+        "required": [
+          "_key",
+          "name",
+          "description"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "GetLoadCarrierTemplatesResponse": {
+        "type": "array",
+        "additionalProperties": false,
+        "items": {
+          "$ref": "#/components/schemas/LoadCarrierTemplate"
+        }
+      },
+      "LoadCarrierOperation": {
+        "type": "string",
+        "description": "Operations for LoadCarrier",
+        "enum": [
+          "adoption",
+          "delivery"
+        ]
+      },
+      "LoadCarrier": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Load carrier for delivery note",
+        "required": [
+          "_key",
+          "name",
+          "description",
+          "operation",
+          "quantity",
+          "damaged",
+          "notice"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "operation": {
+            "$ref": "#/components/schemas/LoadCarrierOperation"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "damaged": {
+            "type": "boolean"
+          },
+          "notice": {
+            "$ref": "#/components/schemas/DescriptionType"
+          }
+        }
+      },
+      "PostLoadCarrierRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "templateKey",
+          "operation",
+          "quantity",
+          "damaged",
+          "notice"
+        ],
+        "properties": {
+          "templateKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "operation": {
+            "$ref": "#/components/schemas/LoadCarrierOperation"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "damaged": {
+            "type": "boolean"
+          },
+          "notice": {
+            "$ref": "#/components/schemas/DescriptionType"
+          }
+        }
+      },
+      "PatchLoadCarrierRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "templateKey",
+          "operation",
+          "quantity",
+          "damaged",
+          "notice"
+        ],
+        "properties": {
+          "templateKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "operation": {
+            "$ref": "#/components/schemas/LoadCarrierOperation"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "damaged": {
+            "type": "boolean"
+          },
+          "notice": {
+            "$ref": "#/components/schemas/DescriptionType"
+          }
+        }
+      },
+      "PostPatchOrganizationSiteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "type",
+          "gln",
+          "address",
+          "phoneNumbers"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/OrganizationSiteType"
+          },
+          "gln": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phoneNumbers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PutLoadCarrierRequest": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PatchLoadCarrierRequest"
+        }
+      },
+      "CreateSignaturePadResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "dateCreated",
+          "type",
+          "getToken",
+          "carrierAccessToken"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SignaturePadType"
+          },
+          "getToken": {
+            "$ref": "#/components/schemas/Token64LengthType"
+          },
+          "carrierAccessToken": {
+            "$ref": "#/components/schemas/Token64LengthType"
+          }
+        }
+      },
+      "PatchBasicUserInformationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "fullName"
+        ],
+        "properties": {
+          "fullName": {
+            "$ref": "#/components/schemas/NameType"
+          }
+        }
+      },
+      "UserInformation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "fullName",
+          "emailAddress"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "emailAddress": {
+            "type": "string"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/UserPermissionsType"
+          }
+        }
+      },
+      "BundleCheckoutResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "consignorName",
+          "carrierName",
+          "consigneeName",
+          "accessToken"
+        ],
+        "properties": {
+          "consignorName": {
+            "type": "string"
+          },
+          "carrierName": {
+            "type": "string"
+          },
+          "consigneeName": {
+            "type": "string"
+          },
+          "accessToken": {
+            "$ref": "#/components/schemas/Token64LengthType"
+          }
+        }
+      },
+      "WalletInviteData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "consignorName",
+          "consignorAddress",
+          "carrierName",
+          "carrierAddress",
+          "consigneeName",
+          "consigneeAddress",
+          "deliveryNoteBundleKey",
+          "deliveryNoteBundleName",
+          "iosWallet",
+          "googlePlayJwt"
+        ],
+        "properties": {
+          "consignorName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consignorAddress": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierAddress": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consigneeAddress": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "deliveryNoteBundleKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "deliveryNoteBundleName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "iosWallet": {
+            "type": "string"
+          },
+          "googlePlayJwt": {
+            "type": "string"
+          }
+        }
+      },
+      "GateData": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "_key",
+            "consigneeName",
+            "deliveryNotes"
+          ],
+          "properties": {
+            "_key": {
+              "$ref": "#/components/schemas/KeyType"
+            },
+            "consigneeName": {
+              "$ref": "#/components/schemas/NameType"
+            },
+            "deliveryNotes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "_key",
+                  "fileName"
+                ],
+                "properties": {
+                  "_key": {
+                    "$ref": "#/components/schemas/KeyType"
+                  },
+                  "fileName": {
+                    "$ref": "#/components/schemas/NameType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SignaturePadBundles": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "_key",
+            "name",
+            "carrierNameOutgoing",
+            "carrierNumberPlateOutgoing",
+            "carrierEmailAddressOutgoing",
+            "consignorName",
+            "carrierName",
+            "consigneeName",
+            "deliveryNotes"
+          ],
+          "properties": {
+            "_key": {
+              "$ref": "#/components/schemas/KeyType"
+            },
+            "name": {
+              "$ref": "#/components/schemas/NameType"
+            },
+            "carrierNameOutgoing": {
+              "$ref": "#/components/schemas/NameType"
+            },
+            "carrierNumberPlateOutgoing": {
+              "type": "string"
+            },
+            "carrierEmailAddressOutgoing": {
+              "type": "string"
+            },
+            "consignorName": {
+              "$ref": "#/components/schemas/NameType"
+            },
+            "carrierName": {
+              "$ref": "#/components/schemas/NameType"
+            },
+            "consigneeName": {
+              "$ref": "#/components/schemas/NameType"
+            },
+            "deliveryNotes": {
+              "$ref": "#/components/schemas/DeliveryNoteArray"
+            }
+          }
+        }
+      },
+      "RequestChangePasswordRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "oldPassword",
+          "newPassword"
+        ],
+        "properties": {
+          "oldPassword": {
+            "$ref": "#/components/schemas/PasswordType"
+          },
+          "newPassword": {
+            "$ref": "#/components/schemas/PasswordType"
+          }
+        }
+      },
+      "ChangeEmailAddressRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "emailAddress"
+        ],
+        "properties": {
+          "emailAddress": {
+            "description": "The new email address",
+            "$ref": "#/components/schemas/EmailAddressType"
+          }
+        }
+      },
+      "TwoFaCodeRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "twoFaCode"
+        ],
+        "properties": {
+          "twoFaCode": {
+            "$ref": "#/components/schemas/TwoFaCode"
+          }
+        }
+      },
+      "CompleteChangeEmailAddressRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "oldEmailAddress2FaCode",
+          "newEmailAddress2FaCode"
+        ],
+        "properties": {
+          "oldEmailAddress2FaCode": {
+            "$ref": "#/components/schemas/TwoFaCode"
+          },
+          "newEmailAddress2FaCode": {
+            "$ref": "#/components/schemas/TwoFaCode"
+          }
+        }
+      },
+      "TwoFaExpiry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "twoFaExpiry"
+        ],
+        "properties": {
+          "twoFaExpiry": {
+            "$ref": "#/components/schemas/TimestampType"
+          }
+        }
+      },
+      "PostUserToOrganizationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "fullName",
+          "emailAddress",
+          "organizationSiteKeys"
+        ],
+        "properties": {
+          "fullName": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "emailAddress": {
+            "$ref": "#/components/schemas/EmailAddressType"
+          },
+          "password": {
+            "$ref": "#/components/schemas/PasswordType"
+          },
+          "organizationSiteKeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyType"
+            }
+          }
+        }
+      },
+      "SendNotificationEmailRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "emailAddress"
+        ],
+        "properties": {
+          "emailAddress": {
+            "$ref": "#/components/schemas/EmailAddressType"
+          }
+        }
+      },
+      "PutPublicResetUserPassword": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "emailAddress"
+        ],
+        "properties": {
+          "emailAddress": {
+            "$ref": "#/components/schemas/EmailAddressType"
+          }
+        }
+      },
+      "PostPublicCompleteResetUserPassword": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "token",
+          "password"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "password": {
+            "$ref": "#/components/schemas/PasswordType"
+          }
+        }
+      },
+      "PostConsigneeCheckinBundlesRequest": {
+        "description": "used to complete a checkin",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "deliveryNoteBundleKeys",
+          "driverSignature",
+          "consigneeSignature"
+        ],
+        "properties": {
+          "deliveryNoteBundleKeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KeyType"
+            }
+          },
+          "driverSignature": {
+            "$ref": "#/components/schemas/Base64Type",
+            "description": "base64 encoded png of the signature"
+          },
+          "consigneeSignature": {
+            "$ref": "#/components/schemas/Base64Type",
+            "description": "base64 encoded png of the signature"
+          }
+        }
+      },
+      "PostBundleResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "_key",
+          "status",
+          "dateCreated",
+          "name",
+          "consignorKey",
+          "carrierKey",
+          "consigneeKey",
+          "carrierNameOutgoing",
+          "carrierNumberPlateOutgoing",
+          "carrierEmailAddressOutgoing",
+          "deliveryNoteKeys"
+        ],
+        "properties": {
+          "_key": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open"
+            ]
+          },
+          "dateCreated": {
+            "$ref": "#/components/schemas/TimestampType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "consignorKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "consigneeKey": {
+            "$ref": "#/components/schemas/KeyType"
+          },
+          "carrierNameOutgoing": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierNumberPlateOutgoing": {
+            "$ref": "#/components/schemas/NameType"
+          },
+          "carrierEmailAddressOutgoing": {
+            "$ref": "#/components/schemas/EmailAddressType"
+          },
+          "deliveryNoteKeys": {
+            "$ref": "#/components/schemas/KeyArrayType"
+          }
+        }
+      },
+      "GetConsigneeDeliveryNoteBundlesCheckinResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ConsigneeDeliveryNoteBundlesForCheckin"
+        }
+      },
+      "GetPublicOrganizationsResponse": {
+        "type": "array",
+        "description": "List of organization names",
+        "items": {
+          "$ref": "#/components/schemas/NameType"
+        }
+      },
+      "KeyType": {
+        "type": "string",
+        "pattern": "^\\d+$"
+      },
+      "KeyXorEmptyKeyType": {
+        "type": "string",
+        "pattern": "^(?![\\s\\S])|\\d+$"
+      },
+      "KeyArrayType": {
+        "type": "array",
+        "description": "array of _keys",
+        "items": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "NameType": {
+        "type": "string",
+        "maxLength": 1024
+      },
+      "DescriptionType": {
+        "type": "string",
+        "maxLength": 10000
+      },
+      "EmptyArray": {
+        "type": "array",
+        "description": "empty array",
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 0,
+        "maxItems": 0
+      },
+      "BinaryFileType": {
+        "description": "data that is encoded as binary data",
+        "type": "string",
+        "format": "binary"
+      },
+      "TimestampType": {
+        "description": "UNIX timestamp in milliseconds",
+        "type": "integer",
+        "minimum": 0
+      },
+      "OrganizationSiteType": {
+        "type": "string",
+        "enum": [
+          "consignor",
+          "carrier",
+          "consignee"
+        ]
+      },
+      "SignaturePadType": {
+        "type": "string",
+        "enum": [
+          "checkout",
+          "checkin"
+        ]
+      },
+      "BundleStatus": {
+        "type": "string",
+        "enum": [
+          "open",
+          "sent",
+          "closed"
+        ]
+      },
+      "EmailAddressType": {
+        "description": "String pattern for email address",
+        "type": "string",
+        "maxLength": 1024
+      },
+      "TwoFaCode": {
+        "type": "string",
+        "pattern": "^\\d{6}$"
+      },
+      "ColorType": {
+        "type": "string",
+        "pattern": "^#[0-9a-f]{6}$"
+      },
+      "PermissionsType": {
+        "description": "for detailed permission descriptions consult the documentation",
+        "type": "object",
+        "additionalProperties": {
+          "type": "boolean"
+        }
+      },
+      "UserPermissionsType": {
+        "description": "All user permissions and if user has this permission. This permissions are set directly to the user and operate globally.\n",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "organization_read": {
+            "type": "boolean",
+            "description": "This permission is need for reading all own organizations"
+          },
+          "user_read": {
+            "type": "boolean",
+            "description": "This permission is need for getting information of users"
+          },
+          "organization_create": {
+            "type": "boolean",
+            "description": "This permission is need for creating new organizations"
+          },
+          "user_permissions_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying permissions of a user"
+          },
+          "user_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying basic global user information, like name, password or email"
+          }
+        }
+      },
+      "OrganizationPermissionsType": {
+        "description": "all organization permissions and if user has this permission for the organization",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "loadcarrier_templates_read": {
+            "type": "boolean",
+            "description": "This permission is need for getting all permitted load carrier types"
+          },
+          "loadcarrier_templates_create": {
+            "type": "boolean",
+            "description": "This permission is need for creating a new load carrier type"
+          },
+          "loadcarrier_templates_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying a load carrier type"
+          },
+          "loadcarrier_templates_delete": {
+            "type": "boolean",
+            "description": "This permission is need for deleting a load carrier type"
+          },
+          "organization_read": {
+            "type": "boolean",
+            "description": "This permission is need for reading this organization"
+          },
+          "organization_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying the specific organization"
+          },
+          "organization_delete": {
+            "type": "boolean",
+            "description": "This permission is need for deleting the specific organization"
+          },
+          "organization_site_create": {
+            "type": "boolean",
+            "description": "This permission is need for creating new sites for the organization"
+          },
+          "user_organization_permissions_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying permissions of a user on organization level"
+          },
+          "user_assign": {
+            "type": "boolean",
+            "description": "This permission is need for assigning users to the organization"
+          },
+          "user_unassign": {
+            "type": "boolean",
+            "description": "This permission is need for unassigning users from the organization"
+          },
+          "users_create": {
+            "type": "boolean",
+            "description": "This permission is needed to create a new user and add this user to the organization"
+          },
+          "user_read": {
+            "type": "boolean",
+            "description": "This permission is need for getting information of users from the organization"
+          },
+          "user_delete": {
+            "type": "boolean",
+            "description": "This permission is need for deleting users from a organization"
+          }
+        }
+      },
+      "OrganizationSitePermissionsType": {
+        "description": "all organization site permissions and if user has this permission for the organization site",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "supplychain_read": {
+            "type": "boolean",
+            "description": "This permission is need for getting all permitted supply chain of the executing user"
+          },
+          "supplychain_create": {
+            "type": "boolean",
+            "description": "This permission is need for creating a new supply chain connection between two organization sites"
+          },
+          "supplychain_delete": {
+            "type": "boolean",
+            "description": "This permission is need for deleting a connection of a supply chain between two organization sites"
+          },
+          "managed_supply_chains_create": {
+            "type": "boolean",
+            "description": "This permission is needed for creating a new managed supply chain for the organization site"
+          },
+          "managed_supply_chains_read": {
+            "type": "boolean",
+            "description": "This permission is needed for reading managed supply chain for the organization site"
+          },
+          "managed_supply_chains_delete": {
+            "type": "boolean",
+            "description": "This permission is needed for deleting managed supply chains for the organization site"
+          },
+          "loadcarrier_read": {
+            "type": "boolean",
+            "description": "This permission is need for getting all permitted load carriers"
+          },
+          "loadcarrier_create": {
+            "type": "boolean",
+            "description": "This permission is need for creating a new load carrier"
+          },
+          "loadcarrier_delete": {
+            "type": "boolean",
+            "description": "This permission is need for deleting a load carrier"
+          },
+          "loadcarrier_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying a load carrier"
+          },
+          "attachment_create": {
+            "type": "boolean",
+            "description": "This permission is need for creating a new attachment"
+          },
+          "attachment_read": {
+            "type": "boolean",
+            "description": "This permission is need for getting all permitted attachments"
+          },
+          "attachment_delete": {
+            "type": "boolean",
+            "description": "This permission is need for deleting a attachment"
+          },
+          "delivery_note_bundles_create": {
+            "type": "boolean",
+            "description": "user can create delivery note bundles"
+          },
+          "delivery_note_bundles_read": {
+            "type": "boolean",
+            "description": "user can read delivery note bundles"
+          },
+          "delivery_note_bundles_update": {
+            "type": "boolean",
+            "description": "user can update delivery note bundles"
+          },
+          "delivery_note_bundles_delete": {
+            "type": "boolean",
+            "description": "user can delete delivery note bundles"
+          },
+          "delivery_note_bundles_merge": {
+            "type": "boolean",
+            "description": "User can merge multiple delivery note bundles into a new one"
+          },
+          "delivery_note_bundles_checkout": {
+            "type": "boolean",
+            "description": "User can checkout a delivery note bundle"
+          },
+          "delivery_note_bundles_checkout_multiple": {
+            "type": "boolean",
+            "description": "User can checkout multiple delivery note bundles at once"
+          },
+          "delivery_note_bundles_checkin": {
+            "type": "boolean",
+            "description": "User can checkin multiple delivery note bundles at once"
+          },
+          "delivery_notes_create": {
+            "type": "boolean",
+            "description": "user can add new pdf file to a delivery note bundle"
+          },
+          "delivery_notes_read": {
+            "type": "boolean",
+            "description": "user can read pdf file from a delivery note bundle"
+          },
+          "delivery_notes_update": {
+            "type": "boolean",
+            "description": "user can update the metadata from a delivery note"
+          },
+          "delivery_notes_delete": {
+            "type": "boolean",
+            "description": "user can delete delivery notes (pdfs)"
+          },
+          "delivery_notes_add_to_bundle": {
+            "type": "boolean",
+            "description": "User can add existing delivery notes to an existing delivery note bundle."
+          },
+          "delivery_notes_in_bundles_delete": {
+            "type": "boolean",
+            "description": "user can delete delivery notes (pdf) in bundles"
+          },
+          "organization_site_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying the site of an organization"
+          },
+          "organization_site_delete": {
+            "type": "boolean",
+            "description": "This permission is need for deleting the specified organization site"
+          },
+          "user_organization_site_permissions_modify": {
+            "type": "boolean",
+            "description": "This permission is need for modifying permissions of a user on organization site level"
+          },
+          "user_assign": {
+            "type": "boolean",
+            "description": "This permission is need for assigning users to the organization"
+          },
+          "user_read": {
+            "type": "boolean",
+            "description": "This permission is need for getting information of users from the organization site"
+          },
+          "user_unassign": {
+            "type": "boolean",
+            "description": "This permission is need for unassigning users from the organization"
+          },
+          "signature_pads_create": {
+            "type": "boolean",
+            "description": "create a new signature pad for checkout or checkin"
+          },
+          "signature_pads_read": {
+            "type": "boolean",
+            "description": "read data from a signature pad"
+          },
+          "send_wallet_invite_emails": {
+            "type": "boolean",
+            "description": "User can send the wallet invite link to an email address."
+          }
+        }
+      },
+      "OrganizationSiteOptionsType": {
+        "description": "All organization site options",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "allow_bundle_creation_with_loose_supply_chains": {
+            "type": "boolean",
+            "description": "Allows the creation of bundles with loose supply chains."
+          }
+        }
+      },
+      "Token64LengthType": {
+        "description": "Token with length 64. Used in different requests.",
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      },
+      "Token64LengthXorEmptyType": {
+        "type": "string",
+        "pattern": "^(?![\\s\\S])$|^[a-f0-9]{64}$"
+      },
+      "Base64Type": {
+        "type": "string"
+      },
+      "PasswordType": {
+        "type": "string",
+        "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\S]{10,}$",
+        "maxLength": 1000
+      }
+    },
+    "parameters": {
+      "organizationKeyParam": {
+        "in": "path",
+        "name": "organizationKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "organizationSiteKeyParam": {
+        "in": "path",
+        "name": "organizationSiteKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "loadCarrierTemplateKeyParam": {
+        "in": "path",
+        "name": "loadCarrierTemplateKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "loadCarrierKeyParam": {
+        "in": "path",
+        "name": "loadCarrierKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "attachmentKeyParam": {
+        "in": "path",
+        "name": "attachmentKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "deliveryNoteBundleKeyParam": {
+        "in": "path",
+        "name": "deliveryNoteBundleKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "deliveryNoteKeyParam": {
+        "in": "path",
+        "name": "deliveryNoteKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "fileNameParam": {
+        "in": "path",
+        "name": "fileName",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "supplyChainKeyParam": {
+        "in": "path",
+        "name": "supplyChainKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "managedSupplyChainKeyParam": {
+        "in": "path",
+        "name": "managedSupplyChainKey",
+        "required": true,
+        "$ref": "#/components/schemas/KeyType"
+      },
+      "targetOrganizationSiteKeyParam": {
+        "in": "path",
+        "name": "targetOrganizationSiteKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "userKeyParam": {
+        "in": "path",
+        "name": "userKey",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/KeyType"
+        }
+      },
+      "SignaturePadTypeParam": {
+        "in": "path",
+        "name": "signaturePadType",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/SignaturePadType"
+        }
+      },
+      "TokenTypeParam": {
+        "in": "query",
+        "required": true,
+        "name": "token",
+        "schema": {
+          "$ref": "#/components/schemas/Token64LengthType"
+        }
+      }
+    },
+    "requestBodies": {
+      "PDFFileRequest": {
+        "required": true,
+        "content": {
+          "application/pdf": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          }
+        }
+      },
+      "PNGFileRequest": {
+        "required": true,
+        "content": {
+          "image/png": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          }
+        }
+      },
+      "AttachmentFile": {
+        "required": true,
+        "content": {
+          "application/pdf": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          },
+          "image/heic": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          },
+          "image/heif": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          },
+          "image/jpeg": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          },
+          "image/png": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          }
+        }
+      },
+      "MergeDeliveryNoteBundle": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/KeyArrayType"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "PNGFileResponse": {
+        "description": "Returns a png file",
+        "content": {
+          "image/png": {
+            "schema": {
+              "$ref": "#/components/schemas/BinaryFileType"
+            }
+          }
+        }
+      },
+      "DefaultErrorResponse": {
+        "description": "Default error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "errorMessage"
+              ],
+              "properties": {
+                "errorMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "dlssessionid"
+      }
+    }
+  },
+  "tags": []
+}
