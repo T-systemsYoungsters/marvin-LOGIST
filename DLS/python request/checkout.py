@@ -18,4 +18,6 @@ def checkout(sessionId,deliveryNoteBundleKey,organizationSiteKey):
 
     checkOutRequestResult = json.loads(checkOutRequest.text)
 
+    #accessToken = checkOutRequestResult['accessToken']
+    
     print(checkOutRequestResult)

@@ -28,5 +28,3 @@ create_loadcarrier(sessionId,loadCarrierTemplateKey,organizationSiteKey,delivery
 set_driverdetails(sessionId,carrierkey,consigneekey,consignorkey,organizationSiteKey,deliveryNoteBundleKey)
 
 checkout(sessionId,deliveryNoteBundleKey,organizationSiteKey)
-
-print("Complete")

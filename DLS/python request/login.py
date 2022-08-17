@@ -9,11 +9,11 @@ def login ():
     'password': 'Test12345678'
     }
 
-  r = requests.post(BASEURL + '/authentication/login', json=auth)   
+  login = requests.post(BASEURL + '/authentication/login', json=auth)   
 
-  result = json.loads(r.text)
+  loginResult = json.loads(login.text)
 
-  organizationSiteKey = result['organizations'][0]['sites'][0]['_key']
-  organizationKey = result['organizations'][0]['_key']
+  organizationSiteKey = loginResult['organizations'][0]['sites'][0]['_key']
+  organizationKey = loginResult['organizations'][0]['_key']
 
-  return {'sessionId':result['sessionId'],'organizationSiteKey':organizationSiteKey,'organizationKey':organizationKey}
+  return {'sessionId':loginResult['sessionId'],'organizationSiteKey':organizationSiteKey,'organizationKey':organizationKey}
