@@ -29,7 +29,7 @@ pdfheaders={
     'content-type':'application/pdf'
     }
 
-files = {'file': open('C:\\Users\\marvi\\Documents\\marvin-LOGIST\\DLS\\python request\\dlsapitest.pdf', 'rb')}
+files = {'file': open('C:\\Users\\marvi\\Documents\\marvin-LOGIST\\DLS\\python request\\one Data\\dlsapitest.pdf', 'rb')}
 deliveryNoteRequest = requests.post(BASEURL + f'/organization-sites/{organizationSiteKey}/delivery-notes/pdf/shiny-pdf-file.pdf', headers=pdfheaders, files=files)
 deliveryNoteRequestResult=json.loads(deliveryNoteRequest.text)
 
